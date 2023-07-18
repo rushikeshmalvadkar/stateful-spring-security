@@ -1,12 +1,16 @@
 package com.stateful.spring.security.controller;
 
+import com.stateful.spring.security.config.MyUserDetails;
+import com.stateful.spring.security.entity.UserEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@ResponseBody
+@RestController
+@Slf4j
 public class BankController {
 
     @GetMapping(value = "/home")
@@ -27,17 +31,20 @@ public class BankController {
     }
 
     @GetMapping(value = "/check-balance")
+    @PreAuthorize(value = "hasAuthority('CUSTOMER')")
     public String checkBalance(){
         return "Your balance is 500";
     }
 
     @GetMapping(value = "/account-info")
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
     public String accountInfo(){
         return "Your account information is below";
     }
 
 
     @GetMapping(value = "/bank-setting")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String bankSetting(){
         return "Admin can only do these settings";
     }
