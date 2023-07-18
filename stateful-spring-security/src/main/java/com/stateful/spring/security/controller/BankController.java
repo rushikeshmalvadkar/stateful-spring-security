@@ -49,4 +49,13 @@ public class BankController {
         return "Admin can only do these settings";
     }
 
+    @GetMapping("/authenticated/user")
+    public String getAuthenticatedUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("Logged in user name :: {}" , authentication.getName()) ;// def
+        MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+        UserEntity userEntity = userDetails.getUserEntity();
+        return userEntity.getUsername();
+    }
+
 }

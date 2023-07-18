@@ -14,6 +14,10 @@ public class MyUserDetails implements UserDetails {
 
     private final UserEntity userEntity;
 
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userEntity.getRole());
