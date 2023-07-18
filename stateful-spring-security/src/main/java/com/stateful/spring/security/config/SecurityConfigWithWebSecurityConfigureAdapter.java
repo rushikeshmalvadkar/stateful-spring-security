@@ -2,26 +2,23 @@ package com.stateful.spring.security.config;
 
 import com.stateful.spring.security.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfigWithWebSecurityConfigureAdapter extends WebSecurityConfigurerAdapter {
 
     public static final String FETCH_USER_QUERY_BY_USER_NAME_QUERY = "select username, password, enabled from users where username=?";
     public static final String FETCH_ROLE_BY_USER_NAME_QUERY = "select username, role from users where username=?";
     public static final String[] PUBLIC_URLS = {"/home", "/about", "/contact-us"};
 
-    private final DataSource dataSource;
+    private final DataSource dataSource;     
 
     private final UserDetailsServiceImpl userDetailsService;
 
@@ -64,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return NoOpPasswordEncoder.getInstance(); // NoOpPasswordEncoder - Not recommended
 //    }
 
-    @Bean
+//    @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(); // Recommended
     }
